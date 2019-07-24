@@ -1,0 +1,17 @@
+{% extends 'master.html' %}
+
+
+{% block content %}
+
+<h6 class="mt-3">{{msg}}</h6>
+<h5 class="mt-4">Alloting "{{q}} ( Book ID: {{q.pk}} )"</h5>
+<h6 class="mb-4">Currently alloted to: {{q.borrower.first_name}} {{q.borrower.last_name}} |
+    Borrowed on: {{q.borrow_date}}
+</h6>
+
+<form action="" method="post">
+    {% csrf_token %}
+    <input type="text" name="roll" class="form-control" placeholder="Enter Roll of Allotee">
+    <button class="mt-2 px-4 btn btn-success" type="submit">Allot</button>
+</form>
+{% endblock %}

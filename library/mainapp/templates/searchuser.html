@@ -1,0 +1,54 @@
+{% extends 'master.html' %}
+
+{% block content %}
+
+<h5 class="my-4">{{msg}}</h5>
+
+<form action="" method="get">
+    <input type="text" class="form-control" name="roll" placeholder="Enter Roll Number">
+    <button class="btn btn-primary px-4 mt-3" type="submit"><span data-feather="search"></span> Search</button>
+</form>
+
+<h2 class="my-3">Borrowed books by {{u.first_name}} {{u.last_name}}</h2>
+      <div class="table-responsive">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Author</th>
+              <th>Id</th>
+              <th>Available</th>
+              <th>Last Borrowed</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+              {% for q in u.book_set.all %}
+              <tr>
+                  <td>{{q.name}}</td>
+                  <td>{{q.author}}</td>
+                  <td>{{q.id}}</td>
+                  <td>
+                    {% if q.available %}
+                    Yes
+                    {% else %}
+                    Borrowed by ({{q.borrower.roll}})
+                    {% endif %}
+                  </td>
+                  <td>{{q.borrow_date}}</td>
+                  <td>
+                    {% if q.available %}
+                    <a class="text-primary" href="{% url 'allotbook' q.pk %}">Allot</a>
+                    {% else %}
+                    <a class="text-success" href="{% url 'renewbook' q.pk %}">Renew</a> |
+                    <a class="text-primary" href="{% url 'makeavailable' q.pk %}">Make Available</a>
+                    {% endif %}
+                  </td>
+              </tr>
+              {% endfor %}
+          </tbody>
+          </table>
+          </div>
+
+
+{% endblock %}
